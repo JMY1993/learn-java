@@ -16,6 +16,48 @@ Unicode转义序列会在解析代码前得到处理。注释中的`\u`要小心
 都会产生错误，前者直接转换为换行符，后者\u后面没有四个十六进制数
 ```
 
+length方法返回的是代码单元数量，不是码点数量。
+
+要获得码点数量，用codePointCount方法：`int cpCount = greeting.codePointCount(0, greeting.length())`
+
+```java
+//获得代码单元（char类型）
+char first = greeting.charAt(0);
+char last = greeting.charAt(greeting.length()-1);
+//获得码点（int类型）
+int index = greeting.offsetByCodePoints(0, i);
+int cp = greeting.codePointAt(index);
+
+//遍历字符串，依次查看每一个码点
+int cp = sentence.codePointAt(i);
+if (Character.isSupplementaryCodePoint(cp)) i += 2; //如果代码单元是supplementary，证明后面还有一个代码单元
+else i++;
+//反向遍历
+i--;
+if (Character.isSurrogate(sentence.charAt(i))) i --;
+int cp = sentence.codePointAt(i);
+```
+
+使用codePoints方法，生成int“流”，每个int对应一个码点。
+
+`int[] codePoints = str.codePoints().toArray();`
+
+再用构造器转换为一个字符串：
+
+`String str2 = new String(codePoints, 0, codePoints.length)`
+
+==上面代码的length是一个属性。（String的length是一个方法，Array的length是一个属性 WTF）==
+
+### StringBuilder 类
+
+先构建一个空的字符串构建器
+
+需要添加内容的时候使用.append()；（参数可以是char也可以是String）
+
+完成以后调用.toString()，生成一个String类型的字符串
+
+#todo 调用.toString()以后，还可以继续append吗？
+
 ### var关键字
 
 如果能够从变量的初始值推断出它的类型，就不需要再声明类型
@@ -146,7 +188,35 @@ int nx = (int) Math.round(x);
 
 应该使用`xxx.equals(yyy)`来判断，也可以使用`xxx.equalsIgnoreCase('hello')`来忽略大小写检测。
 
+### 不可变的字符串（immutable）
+
 与C/C++不同，Java中的字符串不是一个字符数组。
+
+无法更改字符串中某一个单元序列，但是可以修改字符串变量的引用。
+
+### 字符串的repeat方法是Java11中才提供的
+
+### 字符串的join方法是静态的
+
+```java
+String all = String.join(" / ", "S","M","L","XL"); //all is "S / M / L / XL"
+```
+
+这与js中数组的join方法完全不同。
+
+### 可以用`+`进行字符串拼接
+
+#todo 必须是加号前面字符串后面不是字符串吗？可以不可以反过来？
+
+### 字符串的子串
+
+`xxx.substring(startIndex, endIndex);` 取到endIndex之前
+
+### 检查一个字符串既不是null也不是空串（避免NullPointerException, NPE）
+
+`if (str != null && str.length() != 0)`
+
+#jsdiff ==Java中检测字符串长度的length是一个方法，不是一个属性==
 
 ### 位运算
 
