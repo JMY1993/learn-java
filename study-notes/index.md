@@ -225,3 +225,76 @@ String all = String.join(" / ", "S","M","L","XL"); //all is "S / M / L / XL"
 ### 运算符级别
 
 ![image-20220313004955899](/Users/jmy/Documents/learn-CS/learn-java/study-notes/pics/image-20220313004955899.png)
+
+### 读取标准输入流
+
+#### Scanner对象
+
+Scanner(InputStream in)，参数是InputStream类型
+
+首先构造一个与“标准输入流”System.in关联的Scanner对象，这个对象具有nextLine()、nextInt()、nextDouble()方法
+
+#todo 如果输入的数据格式不对怎么办？
+
+#### Console类
+
+只能一行一行的输入
+
+```java
+Console cons = System.console();
+String username = cons.readLine("User Name: "); //参数是一个String的prompt
+char[] passwd = cons.readPassword("Password: ");
+```
+
+Console类和Scanner对象不同：
+
+* 产生方式不同，Scanner对象是构建器new出来的，Console对象是System.console()方法返回的
+* 参数不同。Scanner构建器的参数是输入流对象，实例对象的方法调用时不需要参数。System.console()调用时不需要参数，返回的Console对象调用方法时需要参数 。
+
+#todo static方法和static变量
+
+static变量是该类型所有实例共有的，static方法不依赖实例，直接可以调用。static类型在实例初始化之前就可以调用。
+
+参考资料：https://www.cnblogs.com/dolphin0520/p/3799052.html
+
+### printf
+
+可以格式化输出。%s转换符可以格式化任意对象。
+
+String类：
+
+static String format()，创建一个格式化字符串，而不打印输出。
+
+格式说明符的语法图：
+
+![image-20220313235255274](/Users/jmy/Documents/learn-CS/learn-java/study-notes/pics/image-20220313235255274.png)
+
+### 文件输入输出
+
+文件读取要借助Scanner对象，文件写入要借助PrintWriter对象
+
+Scanner构造器接受一个Path.of(String path_to_file, StandardCharsets.UTF_8);的返回值
+
+如果Scanner构造器接受一个String参数，那么字符串数据是读取的数据。
+
+注意：文件名包含反斜杠`\`的话要再用一个反斜杠转义
+
+记住反斜杠方向的技巧：大写字母N是no的开头字母，中间斜杠的方向就是反斜杠
+
+PrintWriter构造器接受(String path_to_file, StandardCharsets.UTF_8)的参数
+
+String dir = System.getProperty("user.dir");获得Java虚拟机启动目录的位置
+
+打开不存在的文件或者用无法创建的文件名构造PrintWriter会抛出IOException异常。
+
+可以用shell重定向语法将任意文件关联到System.in和System.out
+
+`java MyProg < myfile.txt > output.txt`
+
+### 控制流程
+
+break关键字后面可以带标签
+
+### 作用域
+
+==不能在嵌套的两个块声明同名的变量==，会报错，无法通过编译。这与C/C++不同。
