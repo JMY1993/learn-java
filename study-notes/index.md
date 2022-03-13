@@ -298,3 +298,94 @@ break关键字后面可以带标签
 ### 作用域
 
 ==不能在嵌套的两个块声明同名的变量==，会报错，无法通过编译。这与C/C++不同。
+
+### case标签的类型要求
+
+整型常量表达式
+
+枚举常量
+
+Java7开始，还可以使用字符串字面量
+
+#todo case标签的类型要求必须是常量吗？
+
+### 常量表达式
+
+#todo 是在**编译期**间能计算出来的值
+
+source：https://docs.oracle.com/javase/specs/jls/se8/html/jls-15.html#jls-15.28
+
+中文：https://www.cnblogs.com/iamzhoug37/p/4375684.html
+
+case标签用枚举值时，不必指明枚举值
+
+```java
+Size sz = ...;
+switch (sz) {
+  case SMALL: //不必使用Size.SMALL
+    ...
+    break;
+}
+```
+
+标签表达式后面都是冒号(:)
+
+### 带标签的break
+
+标签必须放在希望跳出的最外层循环之前
+
+continue也可以带标签
+
+### 数组
+
+#### 声明和初始化
+
+数据类型后面带[]，构建器是数据类型，后面也要带[]，方括号里面带元素数量
+
+`int[] a = new int[100];`，可以用var
+
+数组创建后不可以修改长度，如果需要修改长度需要使用**数组列表**（array list）
+
+创建数组并同时提供初始值：
+
+`int[] smallPrimes = { 2, 3, 5, 7, 11, 13 };`
+
+匿名数组语法：
+
+`new int[] { 17, 19, 23, 29, 31, 37 }`
+
+可以直接用简写形式赋值吗？
+
+- 只能用在初始化器中，不能用在已经声明的赋值中
+- 如果数组已经被创建，只能用匿名数组语法
+
+长度为0的数组与null并不相同
+
+数组创建后的初始值
+
+* 数字数组，初始化值为0
+* boolean数组，初始化值为false
+* 对象数组，初始化值为null
+* 字符串数组的初始化值也是null
+
+#### 数组的for each循环
+
+for (variable : collection) statement
+
+#### toString方法
+
+toString是一个static方法，（类名是Arrays，注意结尾的复数s，WTF。在util包里）需要用Array.toString()调用，这与js不同。
+
+实例方法toString，与直接println(arr)相同
+
+#todo 使用arr.toString()，返回的是数组内存地址？
+
+#### 数组的拷贝
+
+直接赋值，等于共同引用同一个数组
+
+可以用xx[] Arrays.copyOf(originArr, length_of_the_new_arr)；第二个参数可以用来增加数组的大小（伸缩）
+
+#### 数值型数组的排序
+
+Arrays类中的sort方法
