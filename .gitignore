@@ -1,2 +1,9 @@
 .DS_Store
 *.class
+
+code/.metadata/*
+code/fmmooc/.classpath
+code/fmmooc/.project
+code/fmmooc/.settings/org.eclipse.jdt.core.prefs
+code/fmmooc/src/module-info.java
+study-notes/code/.metadata/.lock
